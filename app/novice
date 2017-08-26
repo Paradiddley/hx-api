@@ -1,0 +1,98 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+define("MIGRATIONS_PATH", __DIR__."/database/migrations");
+define("SEEDS_PATH", __DIR__."/database/seeds");
+
+/**
+ * Script for creating, destroying, and seeding the app's database
+ */
+class Novice
+{
+    const MIGRATION = 1;
+    const SEED = 2;
+
+    public function __construct($args)
+    {
+        $this->args = $args;
+    }
+
+    public function help()
+    {
+        echo "\n";
+        echo "syntaxis: php novice <command> [<args>]".PHP_EOL;
+        echo PHP_EOL;
+        echo "Commands: \n";
+        echo "php novice --help             -->   Displays the help menu.".PHP_EOL;
+        echo "php novice migrate            -->   Migrate the database.".PHP_EOL;
+        echo "php novice seed               -->   Seed the database tables.".PHP_EOL;
+        echo "php novice migrate --seed     -->   Migrate and seed the database.".PHP_EOL;
+        echo PHP_EOL;
+    }
+
+    public function exec()
+    {
+        if (count($this->args) <= 1) {
+            $this->help();
+        } else {
+            switch ($this->args[1]) {
+                case "migrate":
+                    $this->runMigrations();
+                    if (!isset($this->args[2]) || $this->args[2] != '--seed') {
+                        break;
+                    }
+                    continue;
+                case "seed":
+                    $this->runSeed();
+                    break;
+                case "help":
+                case "--help":
+                    $this->help();
+                    break;
+            }
+        }
+    }
+
+    public function runMigrations()
+    {
+        $files = glob(MIGRATIONS_PATH.'/*.php');
+        $this->run($files, self::MIGRATION);
+    }
+
+    public function runSeed()
+    {
+        $files = glob(SEEDS_PATH.'/*.php');
+        $this->run($files, self::SEED);
+    }
+
+    private function run($files, $task)
+    {
+        $info = '> Running ';
+
+        switch ($task) {
+            case self::MIGRATION:
+                $info .= 'migrations';
+                break;
+            case self::SEED:
+                $info .= 'seeds';
+                break;
+        }
+
+        echo "\033[01;31m{$info}\033[0m \n";
+
+        foreach ($files as $file) {
+            require_once($file);
+
+            $class = basename($file, '.php');
+            echo $class . "\n";
+
+            $obj = new $class;
+            $obj->run();
+        }
+    }
+}
+
+$novice = new Novice($argv);
+$novice->exec();
