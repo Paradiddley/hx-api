@@ -9,7 +9,7 @@ class UserMigration
         Capsule::schema()->dropIfExists('user');
         Capsule::schema()->create('user', function ($table) {
             $table->increments('id');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('forename');
             $table->string('surname');
             $table->timestamps();

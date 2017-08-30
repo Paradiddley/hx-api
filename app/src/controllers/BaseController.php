@@ -82,12 +82,13 @@ abstract class BaseController implements ControllerInterface
     }
 
     /**
-     * @param array $data
+     * @param array|bool $data
      * @param int $code
      * @return Response
      */
-    protected function response(array $data, $code = 200)
+    protected function response($data, $code = 200)
     {
+        $data = is_bool($data) ? ['success' => $data] : $data;
         return $this->response->withJson($data, $code);
     }
 }
