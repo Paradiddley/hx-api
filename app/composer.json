@@ -24,7 +24,7 @@
     },
     "autoload": {
         "files": [
-            "config.php"
+            "config/capsule.php"
         ],
         "classmap": [
             "src/"

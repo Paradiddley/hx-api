@@ -17,3 +17,26 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
+
+function loadFiles($name, &$container, $construct = false)
+{
+    $classes = include($container->get('classloader'));
+
+    foreach ($classes[$name] as $class) {
+        if (class_exists($class)) {
+            $container[$class] = function ($c) use ($class, $construct) {
+                if ($construct) {
+                    return new $class($c);
+                } else {
+                    return new $class;
+                }
+            };
+        }
+    };
+}
+
+// load controllers
+loadFiles('controllers', $container, true);
+
+// load models
+loadFiles('models', $container);

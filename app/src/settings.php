@@ -17,4 +17,5 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
     ],
+    'classloader' => __DIR__ . '/../config/classloader.php'
 ];

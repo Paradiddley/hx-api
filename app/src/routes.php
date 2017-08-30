@@ -1,10 +1,7 @@
 <?php
 // Routes
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+$app->group('/user', function () use ($app) {
+    $app->map(['GET', 'PATCH', 'DELETE'], '/{id:[0-9]+}', \API\Controllers\UserController::class);
+    $app->post('', 'UserController');
 });
