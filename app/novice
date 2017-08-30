@@ -3,8 +3,8 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-define("MIGRATIONS_PATH", __DIR__."/database/migrations");
-define("SEEDS_PATH", __DIR__."/database/seeds");
+define("MIGRATIONS_PATH", __DIR__ . "/data/migrations");
+define("SEEDS_PATH", __DIR__ . "/data/seeds");
 
 /**
  * Script for creating, destroying, and seeding the app's database

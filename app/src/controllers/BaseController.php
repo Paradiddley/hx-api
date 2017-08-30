@@ -2,7 +2,8 @@
 
 namespace API\Controllers;
 
-use API\Repositories\Repository;
+use API\Validation\Validator;
+use API\Validation\ValidatorException;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -10,44 +11,59 @@ use Slim\Http\Response;
 abstract class BaseController implements ControllerInterface
 {
     /** @var Request $request */
-    private $request;
+    protected $request;
 
     /** @var Response $response */
-    private $response;
+    protected $response;
 
     /** @var array $args */
-    private $args;
+    protected $args;
 
-    /** @var string|null $repoClass */
-    protected $repoClass = null;
+    /** @var array $params */
+    protected $params;
 
-    /** @var Repository $repository */
-    protected $repo;
+    /** @var array $body */
+    protected $body;
 
+    /** @var Container $container */
+    protected $container;
+
+    /** @var Validator|null $validation */
+    protected $validation = null;
+
+    /**
+     * BaseController constructor.
+     *
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
-        if (!is_null($this->repoClass) && class_exists($this->repoClass)) {
-            $this->repo = new $this->repoClass($container);
-        }
+        $this->container = $container;
     }
 
-    public function __get($name)
-    {
-        switch ($name) {
-            case 'request':
-            case 'response':
-            case 'args':
-                return $this->$name;
-        }
-    }
-
+    /**
+     * Magic method that runs validation and resolves route
+     * via request method
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $arguments
+     * @return Response
+     */
     public function __invoke(Request $request, Response $response, array $arguments)
     {
-        $this->request = $request;
+        $this->request  = $request;
         $this->response = $response;
-        $this->args = $arguments;
+        $this->args     = $arguments;
+        $this->params   = $request->getParams();
+        $this->body     = $request->getParsedBody();
 
         try {
+            if (!is_null($this->validation) && class_exists($this->validation)) {
+                $validation = new $this->validation($this->body);
+                $validation->validate();
+            }
+
             switch ($request->getMethod()) {
                 case 'GET':
                     return $this->get();
@@ -58,11 +74,18 @@ abstract class BaseController implements ControllerInterface
                 case 'DELETE':
                     return $this->delete();
             }
+        } catch (ValidatorException $e) {
+            return $this->response(['error' => $e->getMessage()], 422);
         } catch (\Exception $e) {
-            return $this->response(['error' => ['message' => $e->getMessage()]], 400);
+            return $this->response(['error' => $e->getMessage()], 400);
         }
     }
 
+    /**
+     * @param array $data
+     * @param int $code
+     * @return Response
+     */
     protected function response(array $data, $code = 200)
     {
         return $this->response->withJson($data, $code);
