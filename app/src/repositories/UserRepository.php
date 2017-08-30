@@ -7,8 +7,30 @@ use Slim\Container;
 
 class UserRepository extends Repository
 {
+    private $required = [
+        'forename',
+        'surname',
+        'email'
+    ];
+
     public function __construct(Container $container)
     {
         parent::__construct($container[User::class]);
+    }
+
+    public function create($data)
+    {
+        $missing = array_diff_key(array_flip($this->required), $data);
+
+        if (!empty($missing)) {
+            throw new \Exception('Missing data for create: ' . implode(', ', $missing));
+        }
+
+        $user = new User;
+        $user->forename = $data['forename'];
+        $user->surname = $data['surname'];
+        $user->email = $data['email'];
+
+        return $user->save();
     }
 }

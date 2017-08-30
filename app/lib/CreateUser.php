@@ -8,8 +8,8 @@ class CreateUser extends Feature
 {
     protected $repoClass = UserRepository::class;
 
-    public function execute($data)
+    public function execute($postData)
     {
-
+        return $this->repo->create($postData);
     }
 }
