@@ -6,34 +6,52 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class Repository
 {
+    /** @var Model $model */
     protected $model;
 
+    /**
+     * Repository constructor.
+     *
+     * @param Model $model
+     */
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function all()
     {
         return $this->model->all();
     }
 
+    /**
+     * @param int $id
+     * @return mixed
+     */
     public function find($id)
     {
         return $this->findBy($this->model->getKeyName(), $id);
     }
 
-    public function findBy($attribute, $value, $relations = null)
+    /**
+     * @param string $attribute
+     * @param mixed $value
+     * @return mixed
+     */
+    public function findBy($attribute, $value)
     {
         $query = $this->model->where($attribute, $value);
-        if ($relations && is_array($relations)) {
-            foreach ($relations as $relation) {
-                $query->with($relation);
-            }
-        }
         return $query->firstOrFail();
     }
 
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @return mixed
+     */
     public function __call($method, $arguments)
     {
         /*

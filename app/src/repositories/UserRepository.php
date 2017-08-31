@@ -7,17 +7,28 @@ use Slim\Container;
 
 class UserRepository extends Repository
 {
+    /** @var array $required */
     private $required = [
         'forename',
         'surname',
         'email'
     ];
 
+    /**
+     * UserRepository constructor.
+     *
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         parent::__construct($container[User::class]);
     }
 
+    /**
+     * @param array $data
+     * @return bool
+     * @throws \Exception
+     */
     public function create($data)
     {
         $missing = array_diff_key(array_flip($this->required), $data);
@@ -36,6 +47,11 @@ class UserRepository extends Repository
         return $user->save();
     }
 
+    /**
+     * @param string $field
+     * @param string $term
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function search($field, $term)
     {
         return $this->model
@@ -43,6 +59,12 @@ class UserRepository extends Repository
             ->get();
     }
 
+    /**
+     * @param int $id
+     * @param array $data
+     * @return int
+     * @throws \Exception
+     */
     public function update($id, $data)
     {
         $fields = array_intersect_key($data, array_flip($this->required));
@@ -56,6 +78,10 @@ class UserRepository extends Repository
             ->update($fields);
     }
 
+    /**
+     * @param int $id
+     * @return int
+     */
     public function delete($id)
     {
         return $this->model->destroy($id);
