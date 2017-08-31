@@ -24,6 +24,8 @@ class UserRepository extends Repository
 
         if (!empty($missing)) {
             throw new \Exception('Missing data for create: ' . implode(', ', $missing));
+        } elseif (User::where('email', $data['email'])->first()) {
+            throw new \Exception('A user with the email ' . $data['email'] . ' already exists');
         }
 
         $user = new User;
@@ -32,5 +34,12 @@ class UserRepository extends Repository
         $user->email = $data['email'];
 
         return $user->save();
+    }
+
+    public function search($field, $term)
+    {
+        return $this->model
+            ->where($field, 'like', "%$term%")
+            ->get();
     }
 }

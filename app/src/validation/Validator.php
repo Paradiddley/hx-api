@@ -7,9 +7,6 @@ abstract class Validator
     /** @var array $args */
     protected $args;
 
-    /** @var array $params */
-    protected $params = [];
-
     /**
      * Validator constructor.
      *
@@ -28,50 +25,14 @@ abstract class Validator
      */
     public function validate()
     {
-        foreach ($this->params as $key => $val) {
-            if (!array_key_exists($key, $this->args)) {
-                return null;
-            }
-
-            $rules = self::getRules($val);
-
-            foreach ($rules as $rule) {
-                if ($args = self::extractRuleArgs($rule)) {
-                    $v = call_user_func_array("Respect\Validation\Validator::" . $rule, $args);
-                } else {
-                    $v = call_user_func("Respect\Validation\Validator::" . $rule);
-                }
-
-                if (!$v->validate($this->args[$key])) {
-                    throw new ValidatorException($key . ' failed ' . $rule . ' validation');
+        foreach ($this->args as $key => $val) {
+            $ruleMethod = $key . 'Rule';
+            if (method_exists($this, $ruleMethod)) {
+                $v = $this->$ruleMethod();
+                if (isset($v) && !$v->validate($this->args[$key])) {
+                    throw new ValidatorException($key . ' failed validation');
                 }
             }
-        }
-    }
-
-    /**
-     * Get rules from param array
-     *
-     * @param string $rules
-     * @return array
-     */
-    private static function getRules($rules)
-    {
-        return explode('|', $rules);
-    }
-
-    /**
-     * Get arguments for rules from param array
-     *
-     * @param string $rule
-     * @return array|null
-     */
-    private static function extractRuleArgs($rule)
-    {
-        if (strpos($rule, ':')) {
-            return explode(',', str_after($rule, ':'));
-        } else {
-            return null;
         }
     }
 }

@@ -10,6 +10,9 @@ class SearchUser extends Feature
 
     public function execute($terms)
     {
+        $results = $this->repo
+            ->search($terms['searchField'], $terms['searchTerm']);
 
+        return $results->toArray();
     }
 }
