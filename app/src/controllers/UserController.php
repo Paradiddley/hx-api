@@ -4,8 +4,10 @@ namespace API\Controllers;
 
 use API\Validation\UserValidation;
 use Lib\CreateUser;
+use Lib\DeleteUser;
 use Lib\RetrieveUser;
 use Lib\SearchUser;
+use Lib\UpdateUser;
 
 class UserController extends BaseController
 {
@@ -51,7 +53,15 @@ class UserController extends BaseController
      */
     public function patch()
     {
+        $data = [
+            'id' => $this->request->getAttribute('id'),
+            'body' => $this->body
+        ];
 
+        $feature = new UpdateUser($this->container);
+        $result = $feature->execute($data);
+
+        return $this->response($result);
     }
 
     /**
@@ -59,6 +69,9 @@ class UserController extends BaseController
      */
     public function delete()
     {
+        $feature = new DeleteUser($this->container);
+        $result = $feature->execute($this->request->getAttribute('id'));
 
+        return $this->response($result);
     }
 }

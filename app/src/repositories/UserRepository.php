@@ -42,4 +42,22 @@ class UserRepository extends Repository
             ->where($field, 'like', "%$term%")
             ->get();
     }
+
+    public function update($id, $data)
+    {
+        $fields = array_intersect_key($data, array_flip($this->required));
+
+        if (isset($fields['email']) && User::where('email', $fields['email'])->first()) {
+            throw new \Exception('A user with the email ' . $data['email'] . ' already exists');
+        }
+
+        return $this->model
+            ->where('id', $id)
+            ->update($fields);
+    }
+
+    public function delete($id)
+    {
+        return $this->model->destroy($id);
+    }
 }
