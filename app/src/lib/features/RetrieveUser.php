@@ -1,6 +1,6 @@
 <?php
 
-namespace API\Lib;
+namespace API\Lib\Features;
 
 use API\Repositories\UserRepository;
 
@@ -9,10 +9,10 @@ class RetrieveUser extends Feature
     protected $repoClass = UserRepository::class;
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return array
      */
-    public function execute($id)
+    public function execute($id = null)
     {
         if ($id) {
             $results = $this->repo->find($id);

@@ -23,7 +23,8 @@ $paths = require $container->get('classloader');
 
 // Classes to instantiate with container
 $injectContainer = [
-    'controllers'
+    'controllers',
+    'repositories'
 ];
 
 foreach ($paths as $path => $classes) {

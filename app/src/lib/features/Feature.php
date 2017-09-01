@@ -1,15 +1,12 @@
 <?php
 
-namespace API\Lib;
+namespace API\Lib\Features;
 
 use API\Repositories\Repository;
 use Slim\Container;
 
 abstract class Feature
 {
-    /** @var Container $container */
-    protected $container;
-
     /** @var string|null $repoClass */
     protected $repoClass = null;
 
@@ -18,10 +15,8 @@ abstract class Feature
 
     public function __construct(Container $container)
     {
-        $this->container = $container;
-
         if (!is_null($this->repoClass) && class_exists($this->repoClass)) {
-            $this->repo = new $this->repoClass($container);
+            $this->repo = $container[$this->repoClass];
         }
     }
 }

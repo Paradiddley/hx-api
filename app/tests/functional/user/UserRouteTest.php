@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\Functional;
+namespace Tests\Functional\User;
 
 use API\Models\User;
+use Tests\Functional\BaseTestCase;
 
 class UserRouteTest extends BaseTestCase
 {

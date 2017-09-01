@@ -35,7 +35,7 @@ class UserRepository extends Repository
 
         if (!empty($missing)) {
             throw new \Exception('Missing data for create: ' . implode(', ', $missing));
-        } elseif (User::where('email', $data['email'])->first()) {
+        } elseif ($this->model->where('email', $data['email'])->first()) {
             throw new \Exception('A user with the email ' . $data['email'] . ' already exists');
         }
 
@@ -69,7 +69,7 @@ class UserRepository extends Repository
     {
         $fields = array_intersect_key($data, array_flip($this->required));
 
-        if (isset($fields['email']) && User::where('email', $fields['email'])->first()) {
+        if (isset($fields['email']) && $this->model->where('email', $fields['email'])->first()) {
             throw new \Exception('A user with the email ' . $data['email'] . ' already exists');
         }
 
