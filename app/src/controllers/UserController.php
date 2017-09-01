@@ -3,11 +3,11 @@
 namespace API\Controllers;
 
 use API\Validation\UserValidation;
-use Lib\CreateUser;
-use Lib\DeleteUser;
-use Lib\RetrieveUser;
-use Lib\SearchUser;
-use Lib\UpdateUser;
+use API\Lib\CreateUser;
+use API\Lib\DeleteUser;
+use API\Lib\RetrieveUser;
+use API\Lib\SearchUser;
+use API\Lib\UpdateUser;
 
 class UserController extends BaseController
 {

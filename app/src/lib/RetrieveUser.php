@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib;
+namespace API\Lib;
 
 use API\Repositories\UserRepository;
 

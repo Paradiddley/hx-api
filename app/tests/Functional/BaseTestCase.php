@@ -18,9 +18,54 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     /**
      * Use middleware when running application?
      *
-     * @var bool
+     * @var bool $withMiddleware
      */
     protected $withMiddleware = true;
+
+    /**
+     * Stored response
+     *
+     * @var Response $response
+     */
+    protected $response;
+
+    /**
+     * Extract JSON response data
+     *
+     * @return array
+     */
+    protected function responseData()
+    {
+        return json_decode((string) $this->response->getBody(), true);
+    }
+
+    /**
+     * Assert status code of response
+     *
+     * @param int $expectedStatus
+     */
+    protected function assertThatResponseHasStatus($expectedStatus)
+    {
+        $this->assertEquals($expectedStatus, $this->response->getStatusCode());
+    }
+
+    /**
+     * Assert content type of response
+     *
+     * @param string $expectedContentType
+     */
+    protected function assertThatResponseHasContentType($expectedContentType)
+    {
+        $this->assertContains($expectedContentType, $this->response->getHeader('Content-Type'));
+    }
+
+    /**
+     * Run seed data
+     */
+    protected static function runSeed()
+    {
+        exec('php ' . __DIR__ . '/../../novice seed', $out);
+    }
 
     /**
      * Process the application given a request method and URI
@@ -67,9 +112,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         require __DIR__ . '/../../src/routes.php';
 
         // Process the application
-        $response = $app->process($request, $response);
-
-        // Return the response
-        return $response;
+        $this->response = $app->process($request, $response);
     }
 }

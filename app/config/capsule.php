@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-$db = getenv('DB_TEST_DATABASE') ?: getenv('DB_DATABASE');
-
 /**
  * Configure the database and boot Eloquent
  */
@@ -11,7 +9,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => getenv('DB_HOST'),
-    'database'  => $db,
+    'database'  => getenv('DB_TEST_DATABASE') ?: getenv('DB_DATABASE'),
     'username'  => getenv('DB_USERNAME'),
     'password'  => getenv('DB_PASSWORD'),
     'charset'   => 'utf8',

@@ -33,8 +33,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "API\\": "src/",
-            "Lib\\": "lib/"
+            "API\\": "src/"
         }
     },
 	"scripts": {

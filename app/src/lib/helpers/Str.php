@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib\Helpers;
+namespace API\Lib\Helpers;
 
 class Str
 {

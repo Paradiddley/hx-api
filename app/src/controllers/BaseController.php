@@ -89,6 +89,14 @@ abstract class BaseController implements ControllerInterface
     protected function respond($data, $code = 200)
     {
         $data = is_bool($data) ? ['success' => $data] : $data;
-        return $this->response->withJson($data, $code);
+
+        $responseBody = $this->response->getBody();
+        $responseBody->write(json_encode($data));
+
+        $response = $this->response;
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus($code)
+            ->withBody($responseBody);
     }
 }

@@ -11,16 +11,16 @@ class UserSeed
 
         $data = [
             [
-                'email' => 'homer@simpsons.com',
-                'forename' => 'Homer',
-                'surname' => 'Simpson',
+                'email' => 'hans@thesimpsons.com',
+                'forename' => 'Hans',
+                'surname' => 'Moleman',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'email' => 'marge@simpsons.com',
-                'forename' => 'Marge',
-                'surname' => 'Simpson',
+                'email' => 'barney@simpsons.com',
+                'forename' => 'Barney',
+                'surname' => 'Gumble',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -32,16 +32,16 @@ class UserSeed
                 'updated_at' => Carbon::now()
             ],
             [
-                'email' => 'lisa@simpsons.com',
-                'forename' => 'Lisa',
+                'email' => 'homer@simpsons.com',
+                'forename' => 'Homer',
                 'surname' => 'Simpson',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'email' => 'maggie@simpsons.com',
-                'forename' => 'Maggie',
-                'surname' => 'Simpson',
+                'email' => 'edna@simpsons.com',
+                'forename' => 'Edna',
+                'surname' => 'Krabappel',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
