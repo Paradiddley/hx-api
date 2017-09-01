@@ -2,4 +2,4 @@
 app/vendor/
 app/logs/*
 app/.env
-database/*
+database/instance/*

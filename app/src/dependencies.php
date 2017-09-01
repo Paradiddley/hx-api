@@ -18,25 +18,25 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
-function loadFiles($name, &$container, $construct = false)
-{
-    $classes = include($container->get('classloader'));
+// Load class dependencies
+$paths = require $container->get('classloader');
 
-    foreach ($classes[$name] as $class) {
+// Classes to instantiate with container
+$injectContainer = [
+    'controllers'
+];
+
+foreach ($paths as $path => $classes) {
+    $inject = in_array($path, $injectContainer);
+    foreach ($classes as $class) {
         if (class_exists($class)) {
-            $container[$class] = function ($c) use ($class, $construct) {
-                if ($construct) {
+            $container[$class] = function ($c) use ($class, $inject) {
+                if ($inject) {
                     return new $class($c);
                 } else {
                     return new $class;
                 }
             };
         }
-    };
-}
-
-// load controllers
-loadFiles('controllers', $container, true);
-
-// load models
-loadFiles('models', $container);
+    }
+};

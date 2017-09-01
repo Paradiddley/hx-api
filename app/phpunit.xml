@@ -1,7 +1,16 @@
-<phpunit bootstrap="vendor/autoload.php">
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="SlimSkeleton">
-            <directory>tests</directory>
+        <testsuite name="functional">
+            <directory>tests/functional</directory>
         </testsuite>
     </testsuites>
+    <listeners>
+        <listener class="Tests\Functional\TestListener">
+        </listener>
+    </listeners>
+    <php>
+        <env name="DB_TEST_DATABASE" value="hxapi_test"/>
+        <env name="BOOTSTRAP_CLEAR_ENV" value="true"/>
+    </php>
 </phpunit>

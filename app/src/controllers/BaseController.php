@@ -59,7 +59,7 @@ abstract class BaseController implements ControllerInterface
         $this->body     = $request->getParsedBody();
 
         try {
-            if (!is_null($this->validation) && class_exists($this->validation)) {
+            if (!is_null($this->validation) && !is_null($this->body)) {
                 $validation = new $this->validation($this->body);
                 $validation->validate();
             }
@@ -75,9 +75,9 @@ abstract class BaseController implements ControllerInterface
                     return $this->delete();
             }
         } catch (ValidatorException $e) {
-            return $this->response(['error' => $e->getMessage()], 422);
+            return $this->respond(['error' => $e->getMessage()], 422);
         } catch (\Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 400);
+            return $this->respond(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -86,7 +86,7 @@ abstract class BaseController implements ControllerInterface
      * @param int $code
      * @return Response
      */
-    protected function response($data, $code = 200)
+    protected function respond($data, $code = 200)
     {
         $data = is_bool($data) ? ['success' => $data] : $data;
         return $this->response->withJson($data, $code);

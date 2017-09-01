@@ -13,20 +13,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-// Instantiate dotenv
-$dotenv = new \Dotenv\Dotenv(__DIR__ . '/../');
-$dotenv->overload();
-$dotenv->required(['DB_HOST', 'DB_USERNAME', 'DB_PASSWORD']);
-
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
-
-// Boot Capsule manager and Eloquent
-$container = $app->getContainer();
-$capsule = new Illuminate\Database\Capsule\Manager;
-$capsule->addConnection($container->get('settings')['db']);
-$capsule->bootEloquent();
 
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
@@ -36,6 +25,9 @@ require __DIR__ . '/../src/middleware.php';
 
 // Register routes
 require __DIR__ . '/../src/routes.php';
+
+// Boot Eloquent
+require __DIR__ . '/../config/capsule.php';
 
 // Run app
 $app->run();

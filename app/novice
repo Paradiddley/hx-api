@@ -1,7 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/config/capsule.php';
 
 define("MIGRATIONS_PATH", __DIR__ . "/data/migrations");
 define("SEEDS_PATH", __DIR__ . "/data/seeds");

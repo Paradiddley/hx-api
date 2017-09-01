@@ -39,7 +39,7 @@ class UserRepository extends Repository
             throw new \Exception('A user with the email ' . $data['email'] . ' already exists');
         }
 
-        $user = new User;
+        $user = $this->model;
         $user->forename = $data['forename'];
         $user->surname = $data['surname'];
         $user->email = $data['email'];

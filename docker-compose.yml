@@ -16,10 +16,16 @@ services:
           - "9000"
       environment:
           - "DB_HOST=db"
-          - "DB_DATABASE=slim"
+          - "DB_DATABASE=hxapi"
   db:
-      image: mariadb
+      build:
+          context: ./database
+      ports:
+          - 3306:3306
       environment:
-          - MYSQL_DATABASE=slim
+          - MYSQL_DATABASE=hxapi
+          - MYSQL_USER=slim
+          - MYSQL_PASSWORD=slim
+          - MYSQL_ROOT_PASSWORD=root
       volumes:
-          - ./database:/var/lib/mysql
+          - ./database/instance:/var/lib/mysql
