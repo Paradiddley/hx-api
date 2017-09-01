@@ -17,6 +17,9 @@ services:
       environment:
           - "DB_HOST=db"
           - "DB_DATABASE=hxapi"
+      depends_on:
+        - db
+      command: bash -c "php novice migrate && php novice seed && /usr/bin/supervisord"
   db:
       build:
           context: ./database

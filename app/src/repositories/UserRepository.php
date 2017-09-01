@@ -34,7 +34,7 @@ class UserRepository extends Repository
         $missing = array_diff_key(array_flip($this->required), $data);
 
         if (!empty($missing)) {
-            throw new \Exception('Missing data for create: ' . implode(', ', $missing));
+            throw new \Exception('Missing data for create. Fields required are: ' . implode(', ', $this->required));
         } elseif ($this->model->where('email', $data['email'])->first()) {
             throw new \Exception('A user with the email ' . $data['email'] . ' already exists');
         }
