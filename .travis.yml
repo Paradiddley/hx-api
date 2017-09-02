@@ -20,13 +20,13 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  - docker ps
 
 before_script:
   - docker-compose -f docker-compose.prod.yml up --build -d
+  - docker ps
 
 script:
-  - ./app/vendor/bin/phpunit
+  - docker exec -it hxapi_fpm_1 vendor/bin/phpunit
 
 after_script:
   - docker-compose down
