@@ -56,6 +56,8 @@ class UserRouteTest extends BaseTestCase
         $this->assertEquals($data['forename'], $user->forename);
         $this->assertEquals($data['surname'], $user->surname);
         $this->assertEquals($data['email'], $user->email);
+
+        self::runSeed();
     }
 
     public function testSearchUser()
@@ -95,6 +97,8 @@ class UserRouteTest extends BaseTestCase
 
         $user = User::find(3);
         $this->assertEquals('Lisa', $user->forename);
+
+        self::runSeed();
     }
 
     public function testDeleteUser()
@@ -110,5 +114,7 @@ class UserRouteTest extends BaseTestCase
 
         $user = User::find(3);
         $this->assertEmpty($user);
+
+        self::runSeed();
     }
 }
