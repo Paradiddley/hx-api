@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y software-properties-common language-pac
     && mkdir /run/php \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY fpm/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN echo "xdebug.idekey = PHPSTORM" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 RUN echo "xdebug.default_enable = 0" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
@@ -23,7 +23,9 @@ RUN sed -i -e 's/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9000/g' /
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+ADD app /var/app
 WORKDIR /var/app
+RUN composer install
 
 EXPOSE 9000
 
