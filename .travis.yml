@@ -20,11 +20,12 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-
-before_script:
   - sudo service mysql stop
   - docker-compose up --build -d
   - docker ps
+  - cd app
+
+install:
   - composer install
 
 script:
