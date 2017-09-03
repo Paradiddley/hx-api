@@ -25,6 +25,7 @@ before_script:
   - sudo service mysql stop
   - docker-compose up --build -d
   - docker ps
+  - composer install
 
 script:
   - docker exec -it hxapi_fpm_1 vendor/bin/phpunit

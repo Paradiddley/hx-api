@@ -1,5 +1,7 @@
 # Web Development API Task
 
+[![Build Status](https://travis-ci.org/Paradiddley/hx-api.svg?branch=master)](https://travis-ci.org/Paradiddley/hx-api)
+
 ### Introduction
 A server-side API submission for Holiday Extras.
 
