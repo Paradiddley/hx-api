@@ -47,6 +47,6 @@ class UserSeed
             ],
         ];
 
-        \API\models\User::insert($data);
+        \API\Models\User::insert($data);
     }
 }
