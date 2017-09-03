@@ -22,10 +22,10 @@ before_install:
   - docker ps
 
 install:
-  - docker exec -it hxapi_fpm_1 /usr/local/bin/composer install
+  - docker exec -i hxapi_fpm_1 /usr/local/bin/composer install
 
 script:
-  - docker exec -it hxapi_fpm_1 vendor/bin/phpunit
+  - docker exec -i hxapi_fpm_1 vendor/bin/phpunit
 
 after_script:
   - docker-compose down
