@@ -14,9 +14,9 @@ and run;
 This should download all necessary images, start up the 
 containers and run migrations/seeds.
 
-There is also an exported Postman collection included that contains
-predefined routes to consume the API. You can find this in the 
-`postman/` directory.
+There is also an exported Postman collection and environment variables 
+that contains predefined routes to consume the API. You 
+can find this in the `postman` directory.
 
 ### Testing
 The project uses PHPUnit for functional and unit tests. 

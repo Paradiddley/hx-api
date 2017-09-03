@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "HX API",
-		"_postman_id": "983203ae-b25b-7e75-77db-c951370d356a",
+		"_postman_id": "0f39204a-3b4f-6f94-5259-0fdb204c11e2",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 				{
 					"name": "Get Users",
 					"request": {
-						"url": "http://localhost:8080/api/users",
+						"url": "http://{{hosted}}/api/users",
 						"method": "GET",
 						"header": [
 							{
@@ -34,7 +34,7 @@
 				{
 					"name": "Create User",
 					"request": {
-						"url": "http://localhost:8080/api/user/new",
+						"url": "http://{{hosted}}/api/user/new",
 						"method": "POST",
 						"header": [
 							{
@@ -54,7 +54,7 @@
 				{
 					"name": "Search User",
 					"request": {
-						"url": "http://localhost:8080/api/user/search",
+						"url": "http://{{hosted}}/api/user/search",
 						"method": "POST",
 						"header": [
 							{
@@ -74,7 +74,7 @@
 				{
 					"name": "Update User",
 					"request": {
-						"url": "http://localhost:8080/api/user/3",
+						"url": "http://{{hosted}}/api/user/3",
 						"method": "PATCH",
 						"header": [
 							{
@@ -94,7 +94,7 @@
 				{
 					"name": "Delete User",
 					"request": {
-						"url": "http://localhost:8080/api/user/1",
+						"url": "http://{{hosted}}/api/user/1",
 						"method": "DELETE",
 						"header": [],
 						"body": {},
@@ -105,7 +105,7 @@
 				{
 					"name": "Get User",
 					"request": {
-						"url": "http://localhost:8080/api/user/3",
+						"url": "http://{{hosted}}/api/user/3",
 						"method": "GET",
 						"header": [],
 						"body": {},
