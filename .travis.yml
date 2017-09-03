@@ -20,6 +20,7 @@ before_install:
   - sudo service mysql stop
   - docker-compose -f docker-compose.prod.yml up --build -d
   - docker ps
+  - mv app/.env.example app/.env
 
 install:
   - docker exec -i hxapi_fpm_1 /usr/local/bin/composer install
