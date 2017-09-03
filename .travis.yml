@@ -3,10 +3,7 @@ sudo: required
 language: php
 
 php:
-  - '5.6'
   - '7.0'
-  - '7.1'
-  - nightly
 
 services:
   - docker
@@ -21,12 +18,11 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
   - sudo service mysql stop
-  - docker-compose up --build -d
+  - docker-compose -f docker-compose.prod.yml up --build -d
   - docker ps
-  - cd app
 
 install:
-  - composer install
+  - docker exec -it hxapi_fpm_1 /usr/local/bin/composer install
 
 script:
   - docker exec -it hxapi_fpm_1 vendor/bin/phpunit

@@ -1,17 +1,13 @@
 version: "2"
 services:
   nginx:
-      build:
-          context: ./
-          dockerfile: ./nginx/Dockerfile
+      image: paradiddley/hxapi-nginx
       ports:
           - "8080:80"
       volumes:
           - ./app:/var/app
   fpm:
-      build:
-          context: ./
-          dockerfile: ./fpm/Dockerfile
+      image: paradiddley/hxapi-fpm
       volumes:
           - ./app:/var/app
       expose:
@@ -21,9 +17,7 @@ services:
           - "DB_DATABASE=hxapi"
       command: bash -c "/usr/bin/supervisord && php novice migrate && php novice seed"
   db:
-      build:
-          context: ./
-          dockerfile: ./database/Dockerfile
+      image: paradiddley/hxapi-db
       ports:
           - 3306:3306
       environment:
